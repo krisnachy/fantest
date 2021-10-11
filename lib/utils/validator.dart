@@ -34,18 +34,4 @@ class Validator {
     }
     return null;
   }
-
-  // static String validateConfirmPassword({required String? pass, required String? confirmPass}) {
-  //   String? password = validatePassword(pass: pass);
-
-  //   if (confirmPass!.isEmpty) {
-  //     return 'This field is required';
-  //   }
-
-  //   if (confirmPass != password) {
-  //     return 'Confimation password does not match the entered password';
-  //   }
-
-  //   return null;
-  // }
 }

@@ -46,235 +46,224 @@ class _LoginState extends State<LoginPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return SafeArea(
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Hello',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 48,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Divider(
-                              thickness: 4,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(width: 40),
-                        ],
-                      ),
-                      Text(
-                        'Welcome back',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 36,
-                            letterSpacing: 5),
-                      ),
-                      SizedBox(height: 40),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              child: Container(
+                margin: EdgeInsets.all(16.0),
+                child: CustomScrollView(
+                  slivers: <Widget>[
+                    SliverList(
+                      delegate: SliverChildListDelegate([
+                        Row(
                           children: <Widget>[
                             Text(
-                              'Email',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 8),
-                            TextFormField(
-                              controller: _emailController,
-                              validator: (value) => Validator.validateEmail(
-                                email: value,
-                              ),
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                hintText: 'Email',
-                                fillColor: Colors.white,
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 16),
+                              'Hello',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 48,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.5,
                               ),
                             ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Password',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 8),
-                            TextFormField(
-                              controller: _passController,
-                              validator: (value) => Validator.validatePassword(
-                                pass: value,
-                              ),
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                hintText: 'Password',
-                                fillColor: Colors.white,
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 16),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Divider(
+                                thickness: 4,
+                                color: Colors.white,
                               ),
                             ),
-                            SizedBox(height: 20),
-                            // Container(
-                            //   width: double.infinity,
-                            //   child: RaisedButton(
-                            //     onPressed: () {},
-                            //     child: Text(
-                            //       'Login',
-                            //       style: TextStyle(color: Colors.white),
-                            //     ),
-                            //     shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(8),
-                            //     ),
-                            //     color: Color(0xFF4f4f4f),
-                            //     elevation: 0,
-                            //     padding: EdgeInsets.symmetric(vertical: 16),
-                            //   ),
-                            // ),
-                            _isProcessing
-                                ? CircularProgressIndicator()
-                                : Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.black,
-                                          ),
-                                          onPressed: () async {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              setState(() {
-                                                _isProcessing = true;
-                                              });
-
-                                              User? user = await AuthService
-                                                  .signInUsingEmailPassword(
-                                                email: _emailController.text,
-                                                pass: _passController.text,
-                                              );
-
-                                              setState(() {
-                                                _isProcessing = false;
-                                              });
-
-                                              if (user != null) {
-                                                Navigator.of(context)
-                                                    .pushReplacement(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomePage(user: user),
-                                                  ),
-                                                );
-                                              }
-                                            }
-                                          },
-                                          child: Text(
-                                            'Sign In',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                            SizedBox(height: 20),
-                            Container(
-                              alignment: Alignment.topCenter,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    // onTap: () {
-                                    //   Navigator.push(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //           builder: (context) => LoginPage()));
-                                    // },
-                                    child: Text(
-                                      'Forgot Password?',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            SizedBox(width: 40),
                           ],
                         ),
-                      ),
-                    ]),
-                  ),
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Container(
-                      color: Colors.blue,
-                      child: Container(
-                        alignment: Alignment.bottomCenter,
-                        margin: EdgeInsets.only(bottom: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(
-                              'Don’t have account ?',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => RegisterPage()));
-                              },
-                              child: Text(
-                                'Register here',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700),
+                        Text(
+                          'Welcome back',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 36,
+                              letterSpacing: 5),
+                        ),
+                        SizedBox(height: 40),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'Email',
+                                style: TextStyle(color: Colors.white),
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 8),
+                              TextFormField(
+                                controller: _emailController,
+                                validator: (value) => Validator.validateEmail(
+                                  email: value,
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  hintText: 'Email',
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 16),
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              Text(
+                                'Password',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              SizedBox(height: 8),
+                              TextFormField(
+                                controller: _passController,
+                                validator: (value) =>
+                                    Validator.validatePassword(
+                                  pass: value,
+                                ),
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  hintText: 'Password',
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 16),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              _isProcessing
+                                  ? CircularProgressIndicator()
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.black,
+                                            ),
+                                            onPressed: () async {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                setState(() {
+                                                  _isProcessing = true;
+                                                });
+
+                                                User? user = await AuthService
+                                                    .signInUsingEmailPassword(
+                                                  email: _emailController.text,
+                                                  pass: _passController.text,
+                                                );
+
+                                                setState(() {
+                                                  _isProcessing = false;
+                                                });
+
+                                                if (user != null) {
+                                                  Navigator.of(context)
+                                                      .pushReplacement(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomePage(user: user),
+                                                    ),
+                                                  );
+                                                }
+                                              }
+                                            },
+                                            child: Text(
+                                              'Sign In',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                              SizedBox(height: 20),
+                              Container(
+                                alignment: Alignment.topCenter,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      // onTap: () {
+                                      //   Navigator.push(
+                                      //       context,
+                                      //       MaterialPageRoute(
+                                      //           builder: (context) => LoginPage()));
+                                      // },
+                                      child: Text(
+                                        'Forgot Password?',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
+                    ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Container(
+                        color: Colors.blue,
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          margin: EdgeInsets.only(bottom: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                'Don’t have account ?',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RegisterPage()));
+                                },
+                                child: Text(
+                                  'Register here',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }
