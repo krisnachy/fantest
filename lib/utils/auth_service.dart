@@ -65,4 +65,9 @@ class AuthService {
 
     return refreshedUser;
   }
+
+  Future sendPasswordResetEmail(String email) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    return auth.sendPasswordResetEmail(email: email);
+  }
 }

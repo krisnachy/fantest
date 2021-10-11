@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:login_app/screens/home_page.dart';
 import 'package:login_app/utils/auth_service.dart';
 import 'package:login_app/utils/validator.dart';
+import 'package:login_app/screens/forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -207,12 +208,13 @@ class _LoginState extends State<LoginPage> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     GestureDetector(
-                                      // onTap: () {
-                                      //   Navigator.push(
-                                      //       context,
-                                      //       MaterialPageRoute(
-                                      //           builder: (context) => LoginPage()));
-                                      // },
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ForgotPassword()));
+                                      },
                                       child: Text(
                                         'Forgot Password?',
                                         style: TextStyle(
